@@ -141,7 +141,7 @@ p {
 
 .phone-vertical {
   width: 100%;
-  max-width: 247px;
+  max-width: 246px;
   position: absolute;
   top: 14%;
   left: 7.48%;
@@ -181,6 +181,7 @@ p {
 
 .layout-3-column {
   padding-top: 46px;
+  padding-bottom: 60px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
@@ -191,7 +192,6 @@ p {
   display: grid;
   grid-template-columns: 60px repeat(3, 1fr);
   column-gap: 20px;
-  justify-content: center;
 
   grid-template-areas:
   "i t t t"
@@ -199,9 +199,30 @@ p {
   "i d d d";
 }
 
+.services__title {
+  grid-area: t;
+
+  font-weight: 900;
+  line-height: 18px;
+  letter-spacing: -0.1px;
+}
+
+.services__description {
+  grid-area: d;
+  padding-top: 9px;
+
+  font-size: 1.2rem;
+  line-height: 22px;
+  font-weight: 400;
+  text-align: justify;
+
+  overflow: hidden;
+}
+
 .services__icon {
   grid-area: i;
   box-sizing: border-box;
+  padding: 1px;
   height: 60px;
 
   border: 1.5px solid #666d89;
@@ -232,23 +253,4 @@ p {
 
 .icon_star {
   background-image: url(assets/images/star.svg);
-}
-
-.services__title {
-  grid-area: t;
-
-  font-weight: 900;
-  line-height: 18px;
-}
-
-.services__description {
-  grid-area: d;
-  padding-top: 9px;
-
-  font-size: 1.2rem;
-  line-height: 22px;
-
-  text-align: justify;
-
-  overflow: hidden;
 }
