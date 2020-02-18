@@ -141,18 +141,18 @@ p {
 
 .phone-vertical {
   width: 100%;
-  max-width: 582px;
+  max-width: 247px;
   position: absolute;
-  top: -5.5%;
+  top: 14%;
   left: 7.48%;
 }
 
 .phone-horizontal {
   width: 100%;
-  max-width: 484px;
+  max-width: 495px;
   position: absolute;
-  top: 56.3%;
-  left: 40.97%;
+  top: 54%;
+  left: 40.4%;
 }
 
 /* services */
@@ -184,12 +184,12 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
-  row-gap: 31px;
+  row-gap: 32px;
 }
 
 .services-item {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 60px repeat(3, 1fr);
   column-gap: 20px;
   justify-content: center;
 
@@ -201,7 +201,8 @@ p {
 
 .services__icon {
   grid-area: i;
-  height: 58px;
+  box-sizing: border-box;
+  height: 60px;
 
   border: 1.5px solid #666d89;
   border-radius: 50%;
@@ -246,7 +247,8 @@ p {
 
   font-size: 1.2rem;
   line-height: 22px;
-  letter-spacing: 0.1px;
+
+  text-align: justify;
 
   overflow: hidden;
 }
