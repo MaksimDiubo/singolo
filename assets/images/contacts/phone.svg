@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 11" width="11" height="11">
+	<defs>
+		<image width="11" height="11" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAArElEQVQoU4XQzQ2CQBCG4XfUcJYSvJCYeIAOaMEOpARLsALtAK2EFjyYrHCig+XIhYwRMPwEYa7z5Nv9RpgZ+8p8NpqgbEEimcUmS0DDn5nH79Q2qc0sJJsQVklr86VvnEDjFl/+4mE5ckonmMQjCJUE7sF7Sr1Yc0XUR+WMasGKuCsmkbv37nVBO2o8PGUHG2xSnbh1TiXH79P9nViT9RvnwIPSubnBrhiHfACCXkqSqzi2ugAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="phone" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>
