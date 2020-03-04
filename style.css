@@ -243,7 +243,7 @@ html {
     display: flex;
     justify-content: space-between;
     min-width: 0%;
-    padding-bottom: 32px;
+    margin-bottom: 32px;
   }
 
   .service__icon {
@@ -336,13 +336,16 @@ html {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -10px;
-    overflow: hidden;
   }
 
   .portfolio__item {
     flex: 0 0 22.916666%;
     margin: 9px auto;
     transition: all 0.2s linear;
+  }
+
+  .portfolio__item:nth-child(1n + 13) {
+    display: none;
   }
 
   .portfolio__item:hover {
@@ -480,7 +483,7 @@ html {
     line-height: 22px;
     letter-spacing: -0.065px;
     text-align: justify;
-    color: #f48c8f;
+    color: #f0d8d9;
     border-style: none;
     border-radius: 5px;
     background-color: #d6564f;
@@ -491,7 +494,7 @@ html {
     height: 202px;
   }
 
-  input[type=button] {
+  input[type=submit] {
     margin-bottom: 0;
     padding: 8px 15px;
     width: unset;
@@ -504,11 +507,12 @@ html {
     transition: color 0.2s linear;
   }
 
-  input[type=button]:hover {
+  input[type=submit]:hover {
     color: #d6564f;
   }
 
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color:#f48c8f;
     opacity: 1;
   }
