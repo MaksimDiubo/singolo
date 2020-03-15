@@ -1,6 +1,6 @@
 const MENU = document.querySelector('.navigation');
 const PHONES = document.querySelectorAll('.phone');
-const PORTFOLIO_ITEMS = document.querySelector('.portfolio__items');
+const PORTFOLIO = document.querySelector('.portfolio');
 const PORTFOLIO_TAGS = document.querySelector('.portfolio__tags');
 const POPUP = document.querySelector('.modal');
 const BUTTON = document.querySelector('.button');
@@ -76,6 +76,89 @@ document.querySelector('.slider__control-next').addEventListener('click', functi
 });
 
 
+const swipeDetect = (el) => {
+
+  let surface = el;
+  let startX = 0;
+  let startY = 0;
+  let distX = 0;
+  let distY = 0;
+
+  let startTime = 0;
+  let elapsedTime = 0;
+
+  let threshold = 150;
+  let restraint = 100;
+  let allowedTime = 300;
+
+  surface.addEventListener('mousedown', function(evt) {
+    startX = evt.pageX;
+    startY = evt.pageY;
+    startTime = new Date().getTime();
+    evt.preventDefault();
+  }, false);
+
+
+  surface.addEventListener('mouseup', function(evt) {
+    distX = evt.pageX - startX;
+    distY = evt.pageY - startY;
+    elapsedTime = new Date().getTime() - startTime;
+    console.log(elapsedTime, distX, distY)
+
+    if (elapsedTime >= allowedTime) {
+      if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
+        if (distX > 0) {
+          if (isEnabled) {
+            previousItem(currentItem);
+          }
+        } else {
+          if (isEnabled) {
+            nextItem(currentItem);
+          }
+        }
+      }
+    }
+    evt.preventDefault();
+  }, false);
+
+  surface.addEventListener('touchstart', function(evt) {
+    let touchObj = evt.changedTouches[0];
+    startX = touchObj.pageX;
+    startY = touchObj.pageY;
+    startTime = new Date().getTime();
+    evt.preventDefault();
+  }, false);
+
+  surface.addEventListener('touchmove', function(evt) {
+    evt.preventDefault();
+  }, false);
+
+  surface.addEventListener('touchend', function(evt) {
+    let touchObj = evt.changedTouches[0];
+    distX = touchObj.pageX - startX;
+    distY = touchObj.pageY - startY;
+    elapsedTime = new Date().getTime() - startTime;
+
+    if (elapsedTime >= allowedTime) {
+      if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
+        if (distX > 0) {
+          if (isEnabled) {
+            previousItem(currentItem);
+          }
+        } else {
+          if (isEnabled) {
+            nextItem(currentItem);
+          }
+        }
+      }
+    }
+    evt.preventDefault();
+  }, false);
+
+}
+swipeDetect(slider);
+
+// Phones displays
 
 PHONES.forEach(el => {
   el.addEventListener('click', () => {
@@ -88,6 +171,7 @@ PHONES.forEach(el => {
   })
 })
 
+// Portfolio
 
 PORTFOLIO_TAGS.addEventListener('click', (evt) => {
   PORTFOLIO_TAGS.querySelectorAll('.portfolio__tag').forEach(el => el.classList.remove('selected'));
@@ -97,20 +181,22 @@ PORTFOLIO_TAGS.addEventListener('click', (evt) => {
       return String(Math.floor(Math.random() * Math.floor(max)));
     }
 
-    PORTFOLIO_ITEMS.querySelectorAll('.portfolio__item').forEach(el => {
+    PORTFOLIO.querySelectorAll('.portfolio__item').forEach(el => {
     el.style.order = getRandomInt(12);
+    el.classList.remove('onclick');
     });
 })
 
-PORTFOLIO_ITEMS.addEventListener('click', (evt) => {
+PORTFOLIO.addEventListener('click', (evt) => {
 
-  PORTFOLIO_ITEMS.querySelectorAll('.portfolio__item').forEach(el => el.classList.remove('onclick'));
+  PORTFOLIO.querySelectorAll('.portfolio__item').forEach(el => el.classList.remove('onclick'));
     evt.target.closest('.portfolio__item').classList.add('onclick');
 })
 
+// Form
 
 FORM.addEventListener('submit', (evt) => {
-  evt.preventDefault('submit');
+  evt.preventDefault();
   if (FORM.checkValidity()) {
   const subject = document.querySelector('.subject').value;
   const description = document.querySelector('.description').value;
