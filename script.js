@@ -122,6 +122,17 @@ const swipeDetect = (el) => {
   }, false);
 
   surface.addEventListener('touchstart', function(evt) {
+    if (evt.target.classList.contains('slider__control-prev') || evt.target.classList.contains('slider__control-prev-icon')) {
+      if (isEnabled) {
+        previousItem(currentItem);
+      }
+    }
+    if (evt.target.classList.contains('slider__control-next') || evt.target.classList.contains('slider__control-next-icon')) {
+      if (isEnabled) {
+        nextItem(currentItem);
+      }
+    }
+
     let touchObj = evt.changedTouches[0];
     startX = touchObj.pageX;
     startY = touchObj.pageY;
