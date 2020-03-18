@@ -9,13 +9,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="home">
       <div class="wrapper header__wrapper">
           <h1 class="visually-hidden">Singolo</h1>
+          <div class="hamburger">
+            <div class="hamburger__line"></div>
+          </div>
           <a href="#" class="header__logo">Singolo<span>*</span></a>
           <nav class="header__navigation">
             <ul class="navigation">
-              <li class="navigation__link active"><a href="#">Home</a></li>
+              <li class="navigation__link"><a class="active" href="#slider">Home</a></li>
               <li class="navigation__link"><a href="#services">Services</a></li>
               <li class="navigation__link"><a href="#portfolio">Portfolio</a></li>
               <li class="navigation__link"><a href="#about">About</a></li>
@@ -26,7 +29,7 @@
     </header>
 
     <main>
-      <section class="slider">
+      <section class="slider" id="slider">
         <div class="wrapper wrapper__slider">
           <div class="slider__inner">
             <div class="slider__item current">
@@ -113,7 +116,7 @@
             <span class="portfolio__tag">Graphic Design</span>
             <span class="portfolio__tag">Artwork</span>
           </div>
-          <ul class="layout-3-row portfolio__items">
+          <ul class="layout-4-column portfolio__items">
             <li class="portfolio__item">
               <img src="assets/images/Gallery/img1.png" width ="220" alt="img1">
             </li>
@@ -243,7 +246,6 @@
 
     <footer class="footer">
       <div class="wrapper footer__wrapper">
-        <p class="copyright">© Copyright 2013 · by PSDchat.com</p>
         <div class="social-media">
           <a class="social-media__link social-media_fb" href="#"></a>
           <a class="social-media__link social-media_g" href="#"></a>

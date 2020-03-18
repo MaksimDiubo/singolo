@@ -9,10 +9,44 @@ const CONTROL_PREV = document.querySelector('.slider__control-prev');
 const CONTROL_NEXT = document.querySelector('.slider__control-next');
 const FORM = document.querySelector('form');
 
-MENU.addEventListener('click', (evt) => {
-  MENU.querySelectorAll('.navigation__link').forEach(el => el.classList.remove('active'));
-  evt.target.closest('.navigation__link').classList.add('active');
-})
+// navigation
+document.addEventListener('scroll', onScroll);
+const mainHeader = document.querySelector('.header');
+
+function onScroll() {
+  const currentPosition = window.scrollY + mainHeader.offsetHeight;
+  const navigatedSections = document.querySelectorAll('section');
+  const navigationLinks = MENU.querySelectorAll('.navigation__link a');
+
+
+  navigatedSections.forEach(el => {
+    if (el.offsetTop <= currentPosition && (el.offsetTop + el.offsetHeight) > currentPosition) {
+        navigationLinks.forEach(link => {
+        link.classList.remove('active');
+        if (el.getAttribute('id') === link.getAttribute('href').substring(1)) {
+          link.classList.add('active');
+        }
+      })
+    }
+  })
+}
+
+MENU.addEventListener('click', moveToAnchor);
+
+function moveToAnchor(evt) {
+  evt.preventDefault();
+  let navigatedSection = document.getElementById(String(evt.target.getAttribute('href').substring(1)));
+  navigatedSection.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth"
+    });
+
+  MENU.querySelectorAll('.navigation__link a').forEach(el => {
+    el.classList.remove('active');
+  })
+  evt.target.classList.add('active')
+}
 
 // slider
 let slider = document.querySelector('.slider');
@@ -103,7 +137,6 @@ const swipeDetect = (el) => {
     distX = evt.pageX - startX;
     distY = evt.pageY - startY;
     elapsedTime = new Date().getTime() - startTime;
-    console.log(elapsedTime, distX, distY)
 
     if (elapsedTime >= allowedTime) {
       if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
