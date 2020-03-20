@@ -1,54 +1,105 @@
-const MENU = document.querySelector('.navigation');
-const PHONES = document.querySelectorAll('.phone');
-const PORTFOLIO = document.querySelector('.portfolio');
-const PORTFOLIO_TAGS = document.querySelector('.portfolio__tags');
-const POPUP = document.querySelector('.modal');
-const BUTTON = document.querySelector('.button');
-const BUTTON_CLOSE = document.querySelector('.button-close');
-const CONTROL_PREV = document.querySelector('.slider__control-prev');
-const CONTROL_NEXT = document.querySelector('.slider__control-next');
-const FORM = document.querySelector('form');
+window.onload = function() {
+  // Navigation
+  addDocumentScrollHandler();
+  addMainMenuClickHandler()
+  // Slider
+  sliderSwiper();
+  phonesToggle();
+  // Tags
+  addTagClickHandler();
+  // Portfolio items
+  addPortfolioItemClickHandler();
+  //Contacts form
+  addFormSubmitHandler();
+};
 
-// navigation
-document.addEventListener('scroll', onScroll);
-const mainHeader = document.querySelector('.header');
+const addTagClickHandler = () => {
+  document.querySelector('.portfolio__tags').addEventListener('click', (e) => {
+    if (e.target.classList.contains('portfolio__tag')) {
+      let clickedElement = e.target;
+      let selectedElementClass = 'selected';
+      let elements = document.querySelectorAll('.portfolio__tag');
+      removeSelectedElement(elements, selectedElementClass);
+      selectClickedElement(clickedElement, selectedElementClass);
+      shufflePortfolioItems();
+    };
+  });
+};
 
-function onScroll() {
-  const currentPosition = window.scrollY + mainHeader.offsetHeight;
-  const navigatedSections = document.querySelectorAll('section');
-  const navigationLinks = MENU.querySelectorAll('.navigation__link a');
+const removeSelectedElement = (elements, elementsClass) => {
+  elements.forEach(element => {
+    element.classList.remove(elementsClass);
+  });
+};
 
+const selectClickedElement = (element, elementClass) => {
+  element.classList.add(elementClass);
+};
 
-  navigatedSections.forEach(el => {
-    if (el.offsetTop <= currentPosition && (el.offsetTop + el.offsetHeight) > currentPosition) {
-        navigationLinks.forEach(link => {
-        link.classList.remove('active');
-        if (el.getAttribute('id') === link.getAttribute('href').substring(1)) {
-          link.classList.add('active');
-        }
-      })
-    }
+const shufflePortfolioItems = () => {
+  let items = document.querySelectorAll('.portfolio__item');
+  removeSelectedElement(items, 'onclick');
+  let arrayFromItems = Array.from(items);
+  let itemsContainer = getPortfolioItemsContainer();
+  arrayFromItems.sort(() => Math.random() - 0.5)
+      .forEach(item => {
+        itemsContainer.append(item)
+      });
+};
+
+const getPortfolioItemsContainer = () => {
+  let itemsContainer = document.querySelector('.portfolio__items');
+  itemsContainer.innerHTML = '';
+  return itemsContainer;
+}
+
+const addPortfolioItemClickHandler = () => {
+  document.querySelector('.portfolio__items').addEventListener('click', (e) => {
+      let clickedElement = e.target.closest('.portfolio__item');
+      let selectedElementClass = 'onclick';
+      let elements = document.querySelectorAll('.portfolio__item');
+      removeSelectedElement(elements, selectedElementClass);
+      selectClickedElement(clickedElement, selectedElementClass);
+  });
+}
+
+const addFormSubmitHandler = () => {
+  let form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let modal = document.querySelector('.modal');
+    if (form.checkValidity()) {
+      addModalContent();
+      selectClickedElement(modal, 'modal_show')
+      }
+      form.reset();
+      return false;
+  });
+  addModalBtnClickHandler();
+}
+
+const addModalContent = () => {
+  let subject = document.querySelector('.subject').value;
+  let description = document.querySelector('.description').value;
+  if (subject) {
+    document.querySelector('.modal__subject').innerText = `Тема: ${subject.toString()}`;
+  } else {
+    document.querySelector('.modal__subject').innerText = 'Без темы';
+  }
+  if (description) {
+    document.querySelector('.modal__description').innerText = `Описание: ${subject.toString()}`;
+  } else {
+    document.querySelector('.modal__description').innerText = 'Без описания';
+  }
+}
+
+const addModalBtnClickHandler = () => {
+  document.querySelector('.modal__button').addEventListener('click', () => {
+    document.querySelector('.modal').classList.remove('modal_show');
   })
 }
 
-MENU.addEventListener('click', moveToAnchor);
-
-function moveToAnchor(evt) {
-  evt.preventDefault();
-  let navigatedSection = document.getElementById(String(evt.target.getAttribute('href').substring(1)));
-  navigatedSection.scrollIntoView({
-      block: "start",
-      inline: "nearest",
-      behavior: "smooth"
-    });
-
-  MENU.querySelectorAll('.navigation__link a').forEach(el => {
-    el.classList.remove('active');
-  })
-  evt.target.classList.add('active')
-}
-
-// slider
+const sliderSwiper = () => {
 let slider = document.querySelector('.slider');
 let items = document.querySelectorAll('.slider__item');
 let currentItem = 0;
@@ -123,7 +174,7 @@ const swipeDetect = (el) => {
 
   let threshold = 150;
   let restraint = 100;
-  let allowedTime = 300;
+  let allowedTime = 150;
 
   surface.addEventListener('mousedown', function(evt) {
     startX = evt.pageX;
@@ -201,73 +252,65 @@ const swipeDetect = (el) => {
 
 }
 swipeDetect(slider);
+}
 
-// Phones displays
-
-PHONES.forEach(el => {
-  el.addEventListener('click', () => {
-    const phoneDisplay =  el.querySelector('.phone__display');
-      if (phoneDisplay.className.includes('phone__display_off')) {
-        phoneDisplay.classList.remove('phone__display_off');
-      } else {
-        phoneDisplay.classList.add('phone__display_off');
-      }
+const phonesToggle = () => {
+  document.querySelectorAll('.phone').forEach(phone => {
+    phone.addEventListener('click', () => {
+      phone.querySelector('.phone__display').classList.toggle('phone__display_off');
+    })
   })
-})
+}
 
-// Portfolio
+const addDocumentScrollHandler = () => {
+  document.addEventListener('scroll', onScroll);
+}
 
-PORTFOLIO_TAGS.addEventListener('click', (evt) => {
-  PORTFOLIO_TAGS.querySelectorAll('.portfolio__tag').forEach(el => el.classList.remove('selected'));
-    evt.target.closest('.portfolio__tag').classList.add('selected');
+const onScroll = () => {
+  let mainHeader = document.querySelector('.header');
+  let currentPosition = window.scrollY + mainHeader.offsetHeight + 2;
+  let navigatedSections = document.querySelectorAll('section');
+  let navigationLinks = document.querySelectorAll('.navigation__link a');
 
-    function getRandomInt(max) {
-      return String(Math.floor(Math.random() * Math.floor(max)));
+  navigatedSections.forEach(el => {
+    if (window.innerHeight + window.scrollY === document.body.offsetHeight) {
+      removeSelectedElement(navigationLinks, 'active');
+      selectClickedElement(document.querySelector('.navigation__link:last-child a'), 'active');
     }
+    if (el.offsetTop <= currentPosition && (el.offsetTop + el.offsetHeight) > currentPosition) {
+      removeSelectedElement(navigationLinks, 'active');
+        navigationLinks.forEach(link => {
+        link.classList.remove('active');
+        if (el.getAttribute('id') === link.getAttribute('href').substring(1)) {
+          selectClickedElement(link, 'active');
+        }
+      })
+    }
+  })
+}
 
-    PORTFOLIO.querySelectorAll('.portfolio__item').forEach(el => {
-    el.style.order = getRandomInt(12);
-    el.classList.remove('onclick');
-    });
-})
+const addMainMenuClickHandler = () => {
+  document.querySelector('.hamburger').addEventListener('click', mobileMenuToggle);
+  addMobileMenuClickHandler();
+}
 
-PORTFOLIO.addEventListener('click', (evt) => {
+const addMobileMenuClickHandler = () => {
+  document.querySelector('.mobile_nav .hamburger').addEventListener('click', mobileMenuToggle);
+}
 
-  PORTFOLIO.querySelectorAll('.portfolio__item').forEach(el => el.classList.remove('onclick'));
-    evt.target.closest('.portfolio__item').classList.add('onclick');
-})
+const mobileMenuToggle = () => {
+  rotateMenuBtn();
+  document.querySelector('.mobile_nav').classList.toggle('menu-from-left');
+  setTimeout(() => {
+    overlayToggle();
+  }, 300);
+}
 
-// Form
+const rotateMenuBtn = () => {
+  document.querySelector('.hamburger').classList.toggle('rotate-right');
+  document.querySelector('.mobile_nav .hamburger').classList.toggle('rotate-right')
+}
 
-FORM.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (FORM.checkValidity()) {
-  const subject = document.querySelector('.subject').value;
-  const description = document.querySelector('.description').value;
-  if (subject) {
-    document.querySelector('.modal__subject').innerText = `Тема: ${subject.toString()}`;
-  } else {
-    document.querySelector('.modal__subject').innerText = 'Без темы';
-  }
-  if (description) {
-    document.querySelector('.modal__description').innerText = `Описание: ${subject.toString()}`;
-  } else {
-    document.querySelector('.modal__description').innerText = 'Без описания';
-  }
-
-  POPUP.classList.add('modal_show');
-  }
-
-  FORM.reset();
-  return false;
-})
-
-BUTTON_CLOSE.addEventListener('click', (evt) => {
-  POPUP.classList.remove('modal_show');
-})
-
-document.addEventListener('keydown', function(evt) {
-  if (evt.keyCode == 27) {
-    POPUP.classList.remove('modal_show');
-  }
-});
+const overlayToggle = () => {
+  document.querySelector('body').classList.toggle('overlay');
+}
