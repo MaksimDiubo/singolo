@@ -221,11 +221,11 @@ const swipeDetect = (el) => {
     startX = touchObj.pageX;
     startY = touchObj.pageY;
     startTime = new Date().getTime();
-    evt.preventDefault();
+    // evt.preventDefault();
   }, false);
 
   surface.addEventListener('touchmove', function(evt) {
-    evt.preventDefault();
+    // evt.preventDefault();
   }, false);
 
   surface.addEventListener('touchend', function(evt) {
@@ -247,7 +247,7 @@ const swipeDetect = (el) => {
         }
       }
     }
-    evt.preventDefault();
+    // evt.preventDefault();
   }, false);
 
 }
@@ -292,6 +292,7 @@ const onScroll = () => {
 const addMainMenuClickHandler = () => {
   document.querySelector('.hamburger').addEventListener('click', mobileMenuToggle);
   addMobileMenuClickHandler();
+  addNavigationLinksClickHandle();
 }
 
 const addMobileMenuClickHandler = () => {
@@ -313,4 +314,12 @@ const rotateMenuBtn = () => {
 
 const overlayToggle = () => {
   document.querySelector('body').classList.toggle('overlay');
+}
+
+const addNavigationLinksClickHandle = () => {
+  document.querySelector('.mobile_nav .navigation').addEventListener('click', (e) => {
+    if (e.target.closest('.navigation__link')) {
+      mobileMenuToggle();
+    };
+  });
 }
