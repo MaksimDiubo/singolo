@@ -87,7 +87,7 @@ const addModalContent = () => {
     document.querySelector('.modal__subject').innerText = 'Без темы';
   }
   if (description) {
-    document.querySelector('.modal__description').innerText = `Описание: ${subject.toString()}`;
+    document.querySelector('.modal__description').innerText = `Описание: ${description.toString()}`;
   } else {
     document.querySelector('.modal__description').innerText = 'Без описания';
   }
